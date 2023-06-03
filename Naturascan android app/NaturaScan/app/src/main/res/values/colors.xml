@@ -7,11 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="itemGreen">#55972B</color>
-    <color name="textGreen">#408316</color>
-    <color name="textLatinGreen">#B3408316</color>
+    <color name="itemGreen">#4CAF50</color>
+    <color name="textGreen">#3F8B42</color>
+    <color name="textLatinGreen">#B23F8B42</color>
     <color name="toxicPurple">#3410C3</color>
-    <color name="toxicLatinPurple">#B33410C3</color>
+    <color name="toxicLatinPurple">#B23410C3</color>
     <color name="transparent">#00000000</color>
+    <color name="red">#DA2424</color>
 
 </resources>
