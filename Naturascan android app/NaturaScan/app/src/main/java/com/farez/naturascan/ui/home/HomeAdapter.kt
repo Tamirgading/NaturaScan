@@ -3,6 +3,7 @@ package com.farez.naturascan.ui.home
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.farez.naturascan.data.local.model.Article
 import com.farez.naturascan.databinding.RvHomeArticleBinding
 
@@ -22,6 +23,10 @@ class HomeAdapter(private  val listArticle: List<Article>) : RecyclerView.Adapte
             binding.apply {
                 descriptionTextView.text = article.content
                 articleTitleTextView.text = article.title
+                Glide.with(holder.itemView.context)
+                    .load(article.pictureUrl)
+                    .centerCrop()
+                    .into(imageView6)
             }
         }
     }
