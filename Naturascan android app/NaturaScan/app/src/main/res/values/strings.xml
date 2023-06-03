@@ -20,5 +20,5 @@
     <string name="appInfoText">Info Aplikasi</string>
     <string name="shareAppText">Bagikan Aplikasi Ini</string>
     <string name="rateAppText">Nilai Aplikasi Ini</string>
-    <string name="logoutText">Logout</string>
+    <string name="logoutText">Log out</string>
 </resources>
