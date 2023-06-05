@@ -11,5 +11,5 @@ NaturaScan is an app created to help you identify edible and toxic plants around
 ### Icons
 - [SVG Repo](https://www.svgrepo.com/)
 
-### Dataset
+### Datasets
 - [Kaggle](https://www.kaggle.com)

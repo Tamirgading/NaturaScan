@@ -17,7 +17,7 @@
         android:theme="@style/Theme.NaturaScan"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.scan.ScanActivity"
+            android:name=".ui.main.fragment.scan.ScanActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             >

@@ -9,10 +9,10 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.farez.naturascan.R
 import com.farez.naturascan.databinding.ActivityMainBinding
-import com.farez.naturascan.ui.account.AccountFragment
-import com.farez.naturascan.ui.home.HomeFragment
-import com.farez.naturascan.ui.saved.SavedPlantsFragment
-import com.farez.naturascan.ui.scan.ScanActivity
+import com.farez.naturascan.ui.main.fragment.account.AccountFragment
+import com.farez.naturascan.ui.main.fragment.home.HomeFragment
+import com.farez.naturascan.ui.main.fragment.saved.SavedPlantsFragment
+import com.farez.naturascan.ui.main.fragment.scan.ScanActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

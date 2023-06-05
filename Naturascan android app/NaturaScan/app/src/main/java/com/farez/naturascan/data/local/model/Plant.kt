@@ -1,14 +1,26 @@
 package com.farez.naturascan.data.local.model
 
-import java.io.File
+import android.os.Parcelable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Entity
+@Parcelize
 data class Plant(
-    val id : Int,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo("id")
+    val id : Int = 0,
+    @ColumnInfo("name")
     val name : String,
+    @ColumnInfo("latinName")
     val latinName : String,
-    val photo : File? = null,
+    @ColumnInfo("photoUri")
+    val photoUri : String? = null,
+    @ColumnInfo("isEdible")
     val isEdible : Boolean
-)
+) : Parcelable
 
 object SamplePlantList {
     val sampleList = listOf(
@@ -16,70 +28,70 @@ object SamplePlantList {
             1,
             "Plant x",
             "Plantus exus",
-            null,
+            "file:///storage/emulated/0/Android/media/com.farez.naturascan/NaturaScan/2023-06-05-15-48-49.jpg",
             isEdible = true
         ),
         Plant(
             2,
             "Plant y",
             "Plantus Yeehaw",
-            null,
+            "file:///storage/emulated/0/Android/media/com.farez.naturascan/NaturaScan/2023-06-05-15-48-49.jpg",
             isEdible = false
         ),
         Plant(
             3,
             "Plant a",
             "Plantus aces",
-            null,
+            "file:///storage/emulated/0/Android/media/com.farez.naturascan/NaturaScan/2023-06-05-15-48-56.jpg",
             isEdible = true
         ),
         Plant(
             4,
             "Plant b",
             "Plantus becus",
-            null,
+            "file:///storage/emulated/0/Android/media/com.farez.naturascan/NaturaScan/2023-06-05-17-10-04.jpg",
             isEdible = false
         ),
         Plant(
             5,
             "Plant c",
             "Plantus ceces",
-            null,
-            isEdible = true
+            "file:///storage/emulated/0/Android/media/com.farez.naturascan/NaturaScan/2023-06-05-17-10-04.jpg",
+            true
         ),
         Plant(
             6,
             "Plant d",
             "Plantus digidaw",
-            null,
+            "file:///storage/emulated/0/Android/media/com.farez.naturascan/NaturaScan/2023-06-05-15-28-28.jpg",
             isEdible = false
         ),
         Plant(
             7,
             "Plant e",
             "Plantus eeck",
-            null,
+            "file:///storage/emulated/0/Android/media/com.farez.naturascan/NaturaScan/2023-06-05-17-10-04.jpg",
             isEdible = true
         ),
         Plant(
             8,
             "Plant f",
             "Plantus fakus",
-            null,
+            "file:///storage/emulated/0/Android/media/com.farez.naturascan/NaturaScan/2023-06-05-17-10-04.jpg",
             isEdible = false
         ),
         Plant(
             9,
             "Plant g",
             "Plantus gege",
-            null,
+            "file:///storage/emulated/0/Android/media/com.farez.naturascan/NaturaScan/2023-06-05-17-10-04.jpg",
             isEdible = true
         ),
         Plant(
             10,
             "Plant h",
             "Plantus Homagah",
-            null,
+            "file:///storage/emulated/0/Android/media/com.farez.naturascan/NaturaScan/2023-06-05-17-10-04.jpg",
             isEdible = false
         ),
     )

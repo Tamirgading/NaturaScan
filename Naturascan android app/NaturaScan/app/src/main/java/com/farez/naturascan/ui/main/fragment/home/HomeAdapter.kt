@@ -1,4 +1,4 @@
-package com.farez.naturascan.ui.home
+package com.farez.naturascan.ui.main.fragment.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
