@@ -58,6 +58,7 @@ class SavedPlantsFragment : Fragment() {
         _binding = null
     }
 
+
     private fun setupViewModel() {
         vmFactory = SavedPlantVMFactory(Injection.provideRepository(requireContext(), requireActivity().application))
         viewModel = ViewModelProvider(this, vmFactory)[SavedPlantViewModel::class.java]

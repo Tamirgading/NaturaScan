@@ -29,13 +29,12 @@ class MainActivity : AppCompatActivity() {
                     replaceFragment(HomeFragment())
                 }
                 R.id.scan -> {
-                    gotoScan()
+                    startActivity(
+                        Intent(this@MainActivity, ScanActivity::class.java)
+                    )
                 }
                 R.id.saved -> {
                     replaceFragment(SavedPlantsFragment())
-                }
-                R.id.account -> {
-                    replaceFragment(AccountFragment())
                 }
             }
             true
@@ -46,17 +45,9 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.apply {
+            setCustomAnimations (R.anim.anim_slide_up, R.anim.anim_slide_down)
             replace(R.id.frameLayout, fragment)
             commit()
         }
-    }
-
-    private fun gotoScan() {
-        startActivity(Intent(this@MainActivity, ScanActivity::class.java))
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.drawer_item, menu)
-        return super.onCreateOptionsMenu(menu)
     }
 }

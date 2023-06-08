@@ -36,7 +36,9 @@
             android:layout_marginBottom="4dp"
             android:clickable="true"
             android:foregroundGravity="bottom"
-            android:src="@drawable/shutterbutton" />
+            android:src="@drawable/shutterbutton"
+            android:contentDescription="shutterButton"
+            />
 
         <ImageView
             android:id="@+id/galleryButton"
@@ -44,7 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="48dp"
-            android:src="@drawable/galleryicon" />
+            android:src="@drawable/galleryicon"
+            android:contentDescription="open gallery"
+            />
     </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

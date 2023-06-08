@@ -71,9 +71,11 @@ class ScanActivity : AppCompatActivity() {
             }
             saveButton.setOnClickListener {
                 Toast.makeText(this@ScanActivity, "Disimpan ke Database", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
             }
             if(isEdible) {
                 edibilityImage.setImageResource(R.drawable.edible_icon_svg)
+                edibilityImage.contentDescription = "tumbuhan bisa dimakan"
                 scanResultTextView.text = getString(R.string.resultEdible)
                 scanResultTextView.setTextColor(ContextCompat.getColor(this@ScanActivity, R.color.textGreen))
                 saveButton.setBackgroundColor(ContextCompat.getColor(this@ScanActivity, R.color.itemGreen))
@@ -81,6 +83,7 @@ class ScanActivity : AppCompatActivity() {
 
             } else {
                 edibilityImage.setImageResource(R.drawable.toxic_icon_svg)
+                edibilityImage.contentDescription = "tumbuhan beracun"
                 scanResultTextView.text = getString(R.string.resultToxic)
                 scanResultTextView.setTextColor(ContextCompat.getColor(this@ScanActivity, R.color.toxicPurple))
                 saveButton.setBackgroundColor(ContextCompat.getColor(this@ScanActivity, R.color.toxicPurple))
@@ -140,15 +143,6 @@ class ScanActivity : AppCompatActivity() {
     //function to capture image from camera
     private fun takePhoto() {
         val imageCapture = imageCapture ?: return
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-            .format(System.currentTimeMillis())
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/NaturaScan")
-            }
-        }
         val photoFile = this.createFile(application)
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
         imageCapture.takePicture(outputOptions,
@@ -193,11 +187,10 @@ class ScanActivity : AppCompatActivity() {
         val outputDirectory =
             if (mediaDir != null && mediaDir.exists()) mediaDir else application.filesDir
 
-        return File(outputDirectory, "$timeStamp.jpg")
+        return File(outputDirectory, "NaturaScan$timeStamp.jpg")
     }
 
     companion object {
-        private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss"
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
         private val TAG = "loog tag"
     }

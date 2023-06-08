@@ -50,6 +50,7 @@ class AccountFragment : Fragment() {
         _binding = null
     }
 
+
     fun setupViewModel() {
         vmFactory = AccountVMFactory(UserPreferences.getInstance(userPref))
         viewModel = ViewModelProvider(this, vmFactory)[AccountViewModel::class.java]
