@@ -24,4 +24,6 @@
     <string name="resultToxic">Tumbuhan ini\nberacun!</string>
     <string name="resultEdible">Tumbuhan ini bisa\ndimakan</string>
     <string name="resultNotFound">Tumbuhan tidak\nditemukan!</string>
+
+
 </resources>

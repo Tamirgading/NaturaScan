@@ -1,11 +1,13 @@
 package com.farez.naturascan.ui.main.fragment.home
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.farez.naturascan.data.local.model.Article
 import com.farez.naturascan.databinding.RvHomeArticleBinding
+import com.farez.naturascan.ui.detail.DetailActivity
 
 class HomeAdapter(private  val listArticle: List<Article>) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
     inner class HomeViewHolder(var binding : RvHomeArticleBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -27,6 +29,11 @@ class HomeAdapter(private  val listArticle: List<Article>) : RecyclerView.Adapte
                     .load(article.pictureUrl)
                     .centerCrop()
                     .into(imageView6)
+            }
+            itemView.setOnClickListener {
+                val intent = Intent(it.context, DetailActivity::class.java)
+                intent.putExtra("article", article)
+                it.context.startActivity(intent)
             }
         }
     }
