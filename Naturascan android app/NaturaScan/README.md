@@ -1,5 +1,6 @@
 # NaturaScan
 NaturaScan is an app created to help you identify edible and toxic plants around you.
+Works for Android 9+
 
 ## Tech Stack
 - [Kotlin Coroutines](https://kotlinlang.org/docs/coroutines-overview.html)
