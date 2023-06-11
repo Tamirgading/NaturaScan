@@ -9,10 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="itemGreen">#4CAF50</color>
     <color name="textGreen">#4BA24F</color>
-    <color name="textLatinGreen">#B24BA24F</color>
-    <color name="toxicPurple">#3410C3</color>
-    <color name="toxicLatinPurple">#B23410C3</color>
     <color name="transparent">#00000000</color>
-    <color name="red">#DA2424</color>
 
 </resources>

@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 
 class UserPreferences (private val dataStore: DataStore <Preferences>) {
     private val token = stringPreferencesKey("TOKEN")
+    private val email = stringPreferencesKey("EMAIL")
     private val auth = booleanPreferencesKey("AUTH")
 
     fun getToken() : Flow<String> {
@@ -18,15 +19,23 @@ class UserPreferences (private val dataStore: DataStore <Preferences>) {
         }
     }
 
-    suspend fun saveToken(token: String) {
-        dataStore.edit {
-            it [this.token] = token
+    fun getEmail() : Flow<String> {
+        return dataStore.data.map {
+            it[email] ?: "null@null.com"
         }
     }
 
-    suspend fun delToken() {
+    suspend fun saveLoginInfo(token: String, email : String) {
+        dataStore.edit {
+            it[this.token] = token
+            it[this.email] = email
+        }
+    }
+
+    suspend fun delLoginInfo() {
         dataStore.edit {
             it[token] = "null"
+            it[email] = "deleted@null.com"
         }
     }
 

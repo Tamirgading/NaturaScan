@@ -2,6 +2,7 @@ package com.farez.naturascan.ui.main.fragment.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.farez.naturascan.data.local.preferences.UserPreferences
 import kotlinx.coroutines.Dispatchers
@@ -10,10 +11,11 @@ import kotlinx.coroutines.launch
 class HomeViewModel (private val userPreferences: UserPreferences) : ViewModel() {
     fun logout() {
         viewModelScope.launch(Dispatchers.IO) {
-            userPreferences.delToken()
+            userPreferences.delLoginInfo()
             userPreferences.setAuth(false)
         }
     }
+    fun getEmail() = userPreferences.getEmail().asLiveData()
 }
 
 class HomeVMFactory(private val userPreferences: UserPreferences) : ViewModelProvider.Factory {

@@ -17,7 +17,7 @@ import com.farez.naturascan.data.local.preferences.UserPreferences
 import com.farez.naturascan.databinding.FragmentHomeBinding
 import com.farez.naturascan.ui.login.LoginActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "TOKEN")
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "EMAIL")
 
 class HomeFragment : Fragment() {
     private var _binding : FragmentHomeBinding? = null
@@ -50,6 +50,11 @@ class HomeFragment : Fragment() {
             this.state = BottomSheetBehavior.STATE_COLLAPSED
         }
         binding.apply {
+
+            viewModel.getEmail().observe(viewLifecycleOwner) {
+                userEmailTextView.text = it
+            }
+
             val adapter = HomeAdapter(sampleArticleList.sampleArticle)
             homeRV.adapter = adapter
             homeRV.layoutManager = LinearLayoutManager(context)

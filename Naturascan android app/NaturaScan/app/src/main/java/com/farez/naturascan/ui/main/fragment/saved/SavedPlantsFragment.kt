@@ -1,21 +1,15 @@
 package com.farez.naturascan.ui.main.fragment.saved
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.farez.naturascan.data.local.model.Plant
 import com.farez.naturascan.data.local.model.SamplePlantList
-import com.farez.naturascan.data.local.preferences.UserPreferences
 import com.farez.naturascan.databinding.FragmentSavedPlantsBinding
 import com.farez.naturascan.di.Injection
 
@@ -60,7 +54,7 @@ class SavedPlantsFragment : Fragment() {
 
 
     private fun setupViewModel() {
-        vmFactory = SavedPlantVMFactory(Injection.provideRepository(requireContext(), requireActivity().application))
+        vmFactory = SavedPlantVMFactory(Injection.providePlantRepository(requireContext(), requireActivity().application))
         viewModel = ViewModelProvider(this, vmFactory)[SavedPlantViewModel::class.java]
     }
     fun addSamplePlant(listPlant : List<Plant>) {

@@ -63,10 +63,6 @@ class UserRepository (private val apiService: ApiService) {
         return registerResult
     }
 
-    fun logout() {
-
-    }
-
     companion object {
         const val NULL_RESPONSE = "Error: Response body is null"
         const val NO_RESPONSE = "Error: Response failed"

@@ -64,7 +64,6 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:text="@string/articleDescText"
-                android:textColor="@color/black"
                 android:textSize="18sp" />
 
         </LinearLayout>

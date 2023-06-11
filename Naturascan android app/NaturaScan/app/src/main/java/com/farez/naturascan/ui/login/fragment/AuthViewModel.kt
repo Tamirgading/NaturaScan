@@ -13,9 +13,9 @@ class AuthViewModel(private val userRepository: UserRepository, private val user
 
     fun register(email: String, password: String) = userRepository.register(email, password)
 
-    fun saveToken(token : String) {
+    fun saveLoginInfo(token : String, email: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            userPreferences.saveToken(token)
+            userPreferences.saveLoginInfo(token, email)
         }
     }
     fun setAuth(auth: Boolean) {
