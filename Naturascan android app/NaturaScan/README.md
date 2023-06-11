@@ -7,6 +7,7 @@ For Android 9+
 - [Retrofit](https://square.github.io/retrofit/)
 - [CameraX](https://developer.android.com/training/camerax)
 - [DataStore](https://developer.android.com/topic/libraries/architecture/datastore)
+- [TensorFlow Lite](https://www.tensorflow.org)
 
 ## Sources
 ### Icons
