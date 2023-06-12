@@ -1,14 +1,14 @@
 package com.farez.naturascan.ui.detail
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.farez.naturascan.data.local.model.Article
 import com.farez.naturascan.databinding.ActivityDetailBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class DetailActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityDetailBinding
+    private lateinit var binding: ActivityDetailBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)

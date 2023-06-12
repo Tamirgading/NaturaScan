@@ -8,24 +8,24 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class UserPreferences (private val dataStore: DataStore <Preferences>) {
+class UserPreferences(private val dataStore: DataStore<Preferences>) {
     private val token = stringPreferencesKey("TOKEN")
     private val email = stringPreferencesKey("EMAIL")
     private val auth = booleanPreferencesKey("AUTH")
 
-    fun getToken() : Flow<String> {
+    fun getToken(): Flow<String> {
         return dataStore.data.map {
             it[token] ?: "null"
         }
     }
 
-    fun getEmail() : Flow<String> {
+    fun getEmail(): Flow<String> {
         return dataStore.data.map {
             it[email] ?: "null@null.com"
         }
     }
 
-    suspend fun saveLoginInfo(token: String, email : String) {
+    suspend fun saveLoginInfo(token: String, email: String) {
         dataStore.edit {
             it[this.token] = token
             it[this.email] = email
@@ -39,7 +39,7 @@ class UserPreferences (private val dataStore: DataStore <Preferences>) {
         }
     }
 
-    suspend fun setAuth(auth : Boolean) {
+    suspend fun setAuth(auth: Boolean) {
         dataStore.edit {
             it[this.auth] = auth
         }

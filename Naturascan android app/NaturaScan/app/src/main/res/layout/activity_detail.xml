@@ -14,9 +14,8 @@
             android:id="@+id/articleImage"
             android:layout_width="match_parent"
             android:layout_height="236dp"
-            tools:src="@tools:sample/avatars"
             android:scaleType="fitXY"
-            />
+            tools:src="@tools:sample/avatars" />
 
         <View
             android:layout_width="match_parent"
@@ -30,33 +29,33 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:layout_marginStart="24dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/articleDescText"
             android:textColor="@color/white"
             android:textSize="24sp" />
     </FrameLayout>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/bottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bottom_sheet_style"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
 
-        >
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
                 android:layout_margin="8dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/round_remove_24"
                 android:clickable="false"
-                />
+                android:scaleType="centerCrop"
+                android:src="@drawable/round_remove_24" />
 
             <TextView
                 android:id="@+id/descriptionTextView"

@@ -7,9 +7,10 @@ import androidx.lifecycle.asLiveData
 import com.farez.naturascan.data.local.preferences.UserPreferences
 
 class LoginViewModel(private val userPreferences: UserPreferences) : ViewModel() {
-    fun checkAuth() : LiveData<Boolean> = userPreferences.getAuth().asLiveData()
+    fun checkAuth(): LiveData<Boolean> = userPreferences.getAuth().asLiveData()
 }
-class LoginVMFactory (private val userPreferences: UserPreferences) : ViewModelProvider.Factory {
+
+class LoginVMFactory(private val userPreferences: UserPreferences) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {

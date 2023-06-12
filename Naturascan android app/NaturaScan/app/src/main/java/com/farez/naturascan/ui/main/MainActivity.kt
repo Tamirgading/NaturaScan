@@ -2,9 +2,9 @@ package com.farez.naturascan.ui.main
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -48,9 +48,8 @@ class MainActivity : AppCompatActivity() {
         viewModel.getAuth().observe(this) {
             if (it) {
                 setupActivity()
-            }
-            else {
-                Toast.makeText(this, "Error: Token is null",Toast.LENGTH_SHORT ).show()
+            } else {
+                Toast.makeText(this, "Error: Token is null", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this, LoginActivity::class.java))
             }
         }
@@ -80,11 +79,12 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.apply {
-            setCustomAnimations (R.anim.anim_slide_up, R.anim.anim_slide_down)
+            setCustomAnimations(R.anim.anim_slide_up, R.anim.anim_slide_down)
             replace(R.id.frameLayout, fragment)
             commit()
         }
     }
+
     fun setupViewModel() {
         vmFactory = MainVMFactory(UserPreferences.getInstance(dataStore))
         viewModel = ViewModelProvider(this@MainActivity, vmFactory)[MainViewModel::class.java]

@@ -3,7 +3,6 @@ package com.farez.naturascan.ui.login.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,7 @@ import android.widget.Toast
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.farez.naturascan.R
 import com.farez.naturascan.data.Status
@@ -22,16 +22,12 @@ import com.farez.naturascan.ui.main.MainActivity
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "TOKEN")
 
 class LoginFragment : Fragment() {
-    private var _binding : FragmentLoginBinding? = null
+    private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModel : AuthViewModel
-    private lateinit var vmFactory : AuthVMFactory
-    private lateinit var userPref : DataStore<Preferences>
+    private lateinit var viewModel: AuthViewModel
+    private lateinit var vmFactory: AuthVMFactory
+    private lateinit var userPref: DataStore<Preferences>
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,18 +42,20 @@ class LoginFragment : Fragment() {
                 gotoRegister()
             }
             loginButton.setOnClickListener {
-                //nanti ini ganti kalo cc siap
-                gotoMain()
-                val email = emailTextView.text.toString()
+                val email = emailEditText.text.toString()
                 val password = password.text.toString()
                 if (!validEmail(email) || !validPass(password)) {
-                    Toast.makeText(context, "Masukkan semua bagian dengan benar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        "Masukkan semua bagian dengan benar",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     viewModel.login(email, password).observe(viewLifecycleOwner) {
                         when (it) {
                             is Status.Error -> {
                                 progressBar2.visibility = View.GONE
-                                Toast.makeText(context, "Error: ${it.error}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "${it.error}", Toast.LENGTH_SHORT).show()
                             }
                             is Status.Loading -> {
                                 progressBar2.visibility = View.VISIBLE
@@ -83,10 +81,12 @@ class LoginFragment : Fragment() {
         _binding = null
     }
 
-    fun setupViewModel() {
-        vmFactory = AuthVMFactory(Injection.provideUserRepository(), UserPreferences.getInstance(userPref))
+    private fun setupViewModel() {
+        vmFactory =
+            AuthVMFactory(Injection.provideUserRepository(), UserPreferences.getInstance(userPref))
         viewModel = ViewModelProvider(requireActivity(), vmFactory)[AuthViewModel::class.java]
     }
+
     private fun gotoRegister() {
         val fragmentManager = parentFragmentManager
         fragmentManager.beginTransaction().apply {
@@ -95,14 +95,16 @@ class LoginFragment : Fragment() {
             commit()
         }
     }
+
     private fun gotoMain() {
         startActivity(Intent(activity, MainActivity::class.java))
     }
 
-    fun validEmail(email : CharSequence) : Boolean{
+    private fun validEmail(email: CharSequence): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
-    fun validPass(pass : String) : Boolean {
-        return (pass.length >=6)
+
+    private fun validPass(pass: String): Boolean {
+        return (pass.length >= 6)
     }
 }

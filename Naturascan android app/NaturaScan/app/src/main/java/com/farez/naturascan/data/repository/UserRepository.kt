@@ -10,12 +10,12 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserRepository (private val apiService: ApiService) {
+class UserRepository(private val apiService: ApiService) {
 
     val loginResult = MutableLiveData<Status<LoginResponse>>()
     val registerResult = MutableLiveData<Status<RegisterResponse>>()
 
-    fun login(email : String, password: String) : LiveData<Status<LoginResponse>> {
+    fun login(email: String, password: String): LiveData<Status<LoginResponse>> {
         loginResult.value = Status.Loading
         apiService.login(email, password).enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
@@ -28,7 +28,7 @@ class UserRepository (private val apiService: ApiService) {
                         loginResult.value = Status.Error(NULL_RESPONSE)
                     }
                 } else {
-                    Status.Error(NO_RESPONSE)
+                    loginResult.value = Status.Error(NO_RESPONSE)
                 }
             }
 
@@ -38,10 +38,14 @@ class UserRepository (private val apiService: ApiService) {
         })
         return loginResult
     }
-    fun register(email : String, password : String) : LiveData<Status<RegisterResponse>> {
+
+    fun register(email: String, password: String): LiveData<Status<RegisterResponse>> {
         registerResult.value = Status.Loading
-        apiService.register(email, password).enqueue(object : Callback<RegisterResponse>{
-            override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {
+        apiService.register(email, password).enqueue(object : Callback<RegisterResponse> {
+            override fun onResponse(
+                call: Call<RegisterResponse>,
+                response: Response<RegisterResponse>
+            ) {
                 if (response.isSuccessful) {
                     val result = response.body()
                     if (result != null) {
@@ -69,8 +73,8 @@ class UserRepository (private val apiService: ApiService) {
         const val FAILURE = "Error: Failed"
 
         @Volatile
-        private var instance : UserRepository? = null
+        private var instance: UserRepository? = null
         fun getInstance(apiService: ApiService) = instance ?: synchronized(this)
-            { instance ?: UserRepository(apiService) }.also { instance = it }
+        { instance ?: UserRepository(apiService) }.also { instance = it }
     }
 }

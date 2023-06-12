@@ -1,6 +1,5 @@
 package com.farez.naturascan.data.local.model
 
-import android.content.res.Resources
 import android.os.Parcelable
 import com.farez.naturascan.R
 import com.farez.naturascan.app.App
@@ -8,9 +7,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Article(
-    val title : String,
-    val content : CharSequence,
-    val pictureUrl : String
+    val title: String,
+    val content: CharSequence,
+    val pictureUrl: String
 ) : Parcelable
 
 object sampleArticleList {
@@ -20,9 +19,9 @@ object sampleArticleList {
     val title = res.getStringArray(R.array.articleTitle)
     val sampleArticle = listOf(
         Article(
-          title[0],
-          content[0],
-          url[0]
+            title[0],
+            content[0],
+            url[0]
         ),
         Article(
             title[1],

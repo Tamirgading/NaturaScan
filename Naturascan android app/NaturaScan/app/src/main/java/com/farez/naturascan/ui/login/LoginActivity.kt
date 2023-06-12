@@ -2,8 +2,8 @@ package com.farez.naturascan.ui.login
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -18,7 +18,7 @@ private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(na
 
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var viewModel : LoginViewModel
+    private lateinit var viewModel: LoginViewModel
     private lateinit var vmFactory: LoginVMFactory
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +33,12 @@ class LoginActivity : AppCompatActivity() {
         }
         supportActionBar?.hide()
     }
+
     private fun setupViewModel() {
         vmFactory = LoginVMFactory(UserPreferences.getInstance(dataStore))
         viewModel = ViewModelProvider(this, vmFactory)[LoginViewModel::class.java]
     }
+
     private fun checkAuth() {
         viewModel.checkAuth().observe(this) {
             if (it) {

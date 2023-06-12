@@ -9,13 +9,14 @@ import com.farez.naturascan.data.local.model.Article
 import com.farez.naturascan.databinding.RvHomeArticleBinding
 import com.farez.naturascan.ui.detail.DetailActivity
 
-class HomeAdapter(private  val listArticle: List<Article>) : RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
-    inner class HomeViewHolder(var binding : RvHomeArticleBinding) : RecyclerView.ViewHolder(binding.root) {
-
-    }
+class HomeAdapter(private val listArticle: List<Article>) :
+    RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+    inner class HomeViewHolder(var binding: RvHomeArticleBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
-        val binding = RvHomeArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            RvHomeArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return HomeViewHolder(binding)
     }
 

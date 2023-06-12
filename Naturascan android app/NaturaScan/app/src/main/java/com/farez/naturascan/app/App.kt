@@ -9,6 +9,7 @@ class App : Application() {
         lateinit var instance: Application
         lateinit var resourses: Resources
     }
+
     override fun onCreate() {
         super.onCreate()
         instance = this

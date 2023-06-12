@@ -8,8 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiConfig {
     companion object {
-        //nati ganti url
-        val url = "https://www.youtube.com/"
+        val url = "https://app-5jkvyvgcba-uc.a.run.app/"
         fun getApiService(): ApiService {
             val loggingInterceptor = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)

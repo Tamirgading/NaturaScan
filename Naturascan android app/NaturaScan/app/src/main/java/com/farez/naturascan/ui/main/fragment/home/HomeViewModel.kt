@@ -8,13 +8,14 @@ import com.farez.naturascan.data.local.preferences.UserPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class HomeViewModel (private val userPreferences: UserPreferences) : ViewModel() {
+class HomeViewModel(private val userPreferences: UserPreferences) : ViewModel() {
     fun logout() {
         viewModelScope.launch(Dispatchers.IO) {
             userPreferences.delLoginInfo()
             userPreferences.setAuth(false)
         }
     }
+
     fun getEmail() = userPreferences.getEmail().asLiveData()
 }
 

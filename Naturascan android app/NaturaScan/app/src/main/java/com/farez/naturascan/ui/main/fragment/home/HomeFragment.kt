@@ -3,13 +3,13 @@ package com.farez.naturascan.ui.main.fragment.home
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.farez.naturascan.data.local.model.sampleArticleList
@@ -17,14 +17,15 @@ import com.farez.naturascan.data.local.preferences.UserPreferences
 import com.farez.naturascan.databinding.FragmentHomeBinding
 import com.farez.naturascan.ui.login.LoginActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "EMAIL")
 
 class HomeFragment : Fragment() {
-    private var _binding : FragmentHomeBinding? = null
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: HomeViewModel
     private lateinit var vmFactory: HomeVMFactory
-    private lateinit var userPref : DataStore<Preferences>
+    private lateinit var userPref: DataStore<Preferences>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +59,6 @@ class HomeFragment : Fragment() {
             val adapter = HomeAdapter(sampleArticleList.sampleArticle)
             homeRV.adapter = adapter
             homeRV.layoutManager = LinearLayoutManager(context)
-            adapter.notifyDataSetChanged()
 
             logoutButton.setOnClickListener {
                 viewModel.logout()
