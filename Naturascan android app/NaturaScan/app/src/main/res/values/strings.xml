@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">NaturaScan</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to login -->
+    <string name="emailText">Email</string>
+    <string name="passwordText">Password</string>
+    <string name="plantNameText">Plant X</string>
+    <string name="edibilityText">Tumbuhan beracun</string>
+    <string name="articleNameText">Sample Article Name</string>
+    <string name="articleDescText">Sample Article Description with extra text</string>
+    <string name="registerNewText">Daftar Baru</string>
+    <string name="createAccountText">Buat akun</string>
+    <string name="loginPlaceholderText">sudah punya akun? silahkan </string>
+    <string name="loginText">Login</string>
+    <string name="registerPlaceholderText">Jika belum punya akun silahkan </string>
+    <string name="registerText">Daftar</string>
+    <string name="sampleUserEmailText">userEmail@xxxx.com</string>
+    <string name="appInfoText">Info Aplikasi</string>
+    <string name="shareAppText">Bagikan Aplikasi Ini</string>
+    <string name="rateAppText">Nilai Aplikasi Ini</string>
+    <string name="logoutText">Log out</string>
+    <string name="edibleText">Bisa dimakan</string>
+    <string name="resultEdible">Tumbuhan Ini bisa dimakan</string>
+    <string name="emptyDatabase">Tidak ada data tanaman\nyang disimpan</string>
+    <string name="descriptionText">Deskripsi</string>
+
+
+</resources>
