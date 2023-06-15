@@ -5,28 +5,31 @@ import android.app.Application
 import android.app.Dialog
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.util.Size
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.*
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.farez.naturascan.R
+import com.farez.naturascan.app.App
 import com.farez.naturascan.data.local.model.Plant
 import com.farez.naturascan.databinding.ActivityScanBinding
 import com.farez.naturascan.databinding.DialogScanPopupBinding
 import com.farez.naturascan.di.Injection
 import com.farez.naturascan.ml.ConvertedModel
+import com.farez.naturascan.util.reduceFileImage
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.common.ops.NormalizeOp
 import org.tensorflow.lite.support.image.ImageProcessor
@@ -46,6 +49,21 @@ class ScanActivity : AppCompatActivity() {
         .add(NormalizeOp(0.0f, 255.0f))
         .add(ResizeOp(150, 150, ResizeOp.ResizeMethod.BILINEAR))
         .build()
+    private val labels = arrayOf(
+        "Allium", "Borage", "Burdock",
+        "Calendula", "Chickweed", "Chicory",
+        "Common yarrow", "Daisy", "Dandelion",
+        "Geranium", "Ground ivy", "Henbit",
+        "Meadowsweet", "Ramsons", "Red Clover"
+    )
+    private val sampleImageArray = arrayOf(
+        R.drawable.allium, R.drawable.borage, R.drawable.burdock, R.drawable.calendula,
+        R.drawable.chickweed, R.drawable.chicory, R.drawable.daun_seribu, R.drawable.daisy,
+        R.drawable.dandelion, R.drawable.geranium, R.drawable.glechoma_hederacea, R.drawable.henbit,
+        R.drawable.filipendula_ulmaria, R.drawable.allium_ursinum,  R.drawable.semanggi_merah
+
+    )
+    private val desc = App.resourses.getStringArray(R.array.plantDesc)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,8 +78,8 @@ class ScanActivity : AppCompatActivity() {
         binding.galleryButton.setOnClickListener {
             val intent = Intent()
             intent.apply {
-                action = Intent.ACTION_GET_CONTENT
                 type = "image/*"
+                action = Intent.ACTION_OPEN_DOCUMENT
             }
             val chooser = Intent.createChooser(intent, "pilih gambar")
             launcherIntentGallery.launch(chooser)
@@ -69,11 +87,12 @@ class ScanActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        vmFactory = ScanVMFactory(Injection.providePlantRepository(this@ScanActivity, application))
+        vmFactory = ScanVMFactory(Injection.providePlantRepository(application))
         viewModel = ViewModelProvider(this@ScanActivity, vmFactory)[ScanViewModel::class.java]
     }
 
-    private fun createDialog(plantName: String, imageUri: String) {
+    private fun createDialog(plantName: String, imageUri: Uri) {
+        var plantDesc : String? = null
         val dialogBinding = DialogScanPopupBinding.inflate(layoutInflater)
         val dialog = Dialog(this@ScanActivity)
         dialog.setContentView(dialogBinding.root)
@@ -81,137 +100,27 @@ class ScanActivity : AppCompatActivity() {
             setBackgroundDrawableResource(R.color.transparent)
             setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         }
-
-        //SET PLANT NAME AND SAMPLE PLANT PICTURE IN DIALOG
         dialogBinding.apply {
-            when (plantName) {
-                "Allium" -> {
+            //SET PLANT NAME AND SAMPLE PLANT PICTURE IN DIALOG
+            for (i in 0..labels.size) {
+                if (plantName == labels[i]) {
                     Glide.with(this@ScanActivity)
-                        .load(R.drawable.allium)
+                        .load(sampleImageArray[i])
                         .centerCrop()
                         .into(edibilityImage)
-                    plantNameTextVIew.text = "Allium"
+                    plantNameTextVIew.text = labels[i]
+                    plantDesc = desc[i].toString()
+                    break
                 }
-                "Borage" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.borage)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Borage"
-
-                }
-                "Burdock" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.burdock)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Burdock"
-
-                }
-                "Calendula" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.calendula)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Calendula"
-
-                }
-                "Chickweed" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.chickweed)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Chickweed"
-                }
-                "Chicory" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.chicory)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Chicory"
-
-                }
-                "Common yarrow" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.daun_seribu)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Daun Seribu"
-
-                }
-                "Daisy" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.daisy)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Daisy"
-
-                }
-                "Dandelion" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.dandelion)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    edibilityImage.setImageResource(R.drawable.dandelion)
-                    plantNameTextVIew.text = "Dandelion"
-
-                }
-                "Geranium" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.geranium)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Geranium"
-
-                }
-                "Ground ivy" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.glechoma_hederacea)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Glechoma Hederacea"
-
-                }
-                "Henbit" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.henbit)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Henbit"
-
-                }
-                "Meadowsweet" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.filipendula_ulmaria)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Filipendula Ulmaria"
-                }
-                "Ramsons" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.allium_ursinum)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Allium Ursinum"
-                }
-                "Red Clover" -> {
-                    Glide.with(this@ScanActivity)
-                        .load(R.drawable.semanggi_merah)
-                        .centerCrop()
-                        .into(edibilityImage)
-                    plantNameTextVIew.text = "Semanggi Merah"
-                }
-                else -> println("Unknown plant.")
             }
-        }
-        dialogBinding.apply {
             closeButton.setOnClickListener {
                 dialog.dismiss()
             }
             saveButton.setOnClickListener {
                 val plant = Plant(
                     name = plantNameTextVIew.text.toString(),
-                    photoUri = imageUri
+                    photoUri = imageUri.toString(),
+                    desc = plantDesc
                 )
                 viewModel.insert(plant)
                 Toast.makeText(this@ScanActivity, "Disimpan ke Database", Toast.LENGTH_SHORT).show()
@@ -251,8 +160,9 @@ class ScanActivity : AppCompatActivity() {
     fun identifyImage(bitmap: Bitmap, imageUri: Uri) {
         val shape = intArrayOf(1, 150, 150, 3)
         val model = ConvertedModel.newInstance(this@ScanActivity)
+        val compressedBitmap = reduceFileImage(bitmap)
         var tensorImage = TensorImage(DataType.FLOAT32)
-        tensorImage.load(bitmap)
+        tensorImage.load(compressedBitmap)
         tensorImage = imageProcessor.process(tensorImage)
         // Creates inputs for reference.
         val inputFeature0 = TensorBuffer.createFixedSize(shape, DataType.FLOAT32)
@@ -262,20 +172,13 @@ class ScanActivity : AppCompatActivity() {
         val outputs = model.process(inputFeature0)
         val outputFeature0 = outputs.outputFeature0AsTensorBuffer
         val confidences = outputFeature0.floatArray
-        val labels = arrayOf(
-            "Allium", "Borage", "Burdock",
-            "Calendula", "Chickweed", "Chicory",
-            "Common yarrow", "Daisy", "Dandelion",
-            "Geranium", "Ground ivy", "Henbit",
-            "Meadowsweet", "Ramsons", "Red Clover"
-        )
         var maxPos = 0
         confidences.forEachIndexed { index, fl ->
             if (confidences[maxPos] < fl) {
                 maxPos = index
             }
         }
-        createDialog(labels[maxPos], imageUri.toString())
+        createDialog(labels[maxPos], imageUri)
         // Releases model resources if no longer used.
         model.close()
     }
@@ -320,11 +223,6 @@ class ScanActivity : AppCompatActivity() {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    Toast.makeText(
-                        this@ScanActivity,
-                        "Tersimpan di ${output.savedUri?.path}",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     val uri = output.savedUri as Uri
                     val source = ImageDecoder.createSource(
                         this@ScanActivity.contentResolver,
@@ -333,17 +231,8 @@ class ScanActivity : AppCompatActivity() {
                     val bitmap =
                         ImageDecoder.decodeBitmap(source).copy(Bitmap.Config.ARGB_8888, true)
                     identifyImage(bitmap, uri)
-                    Log.d(TAG, "onImageSaved: ${output.savedUri}")
                 }
             })
-    }
-
-    fun ImageProxy.convertImageProxyToBitmap(): Bitmap {
-        val buffer = planes[0].buffer
-        buffer.rewind()
-        val bytes = ByteArray(buffer.capacity())
-        buffer.get(bytes)
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
     }
 
     private val launcherIntentGallery = registerForActivityResult(
@@ -353,7 +242,12 @@ class ScanActivity : AppCompatActivity() {
             val selectedImg: Uri = result.data?.data as Uri
             val source = ImageDecoder.createSource(this.contentResolver, selectedImg)
             val bitmap = ImageDecoder.decodeBitmap(source).copy(Bitmap.Config.ARGB_8888, true)
-            identifyImage(bitmap, selectedImg)
+            val uri = result.data?.data!!
+            this.contentResolver.takePersistableUriPermission(
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
+            identifyImage(bitmap, uri)
         }
     }
 
@@ -373,6 +267,5 @@ class ScanActivity : AppCompatActivity() {
 
     companion object {
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
-        private const val TAG = "loog tag"
     }
 }

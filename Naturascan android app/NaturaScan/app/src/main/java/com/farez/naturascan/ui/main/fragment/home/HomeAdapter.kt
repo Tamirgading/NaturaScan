@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.farez.naturascan.data.local.model.Article
 import com.farez.naturascan.databinding.RvHomeArticleBinding
-import com.farez.naturascan.ui.detail.DetailActivity
+import com.farez.naturascan.ui.detailarticle.DetailActivity
 
 class HomeAdapter(private val listArticle: List<Article>) :
     RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {

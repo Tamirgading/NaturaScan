@@ -55,7 +55,7 @@ class LoginFragment : Fragment() {
                         when (it) {
                             is Status.Error -> {
                                 progressBar2.visibility = View.GONE
-                                Toast.makeText(context, "${it.error}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, it.error, Toast.LENGTH_SHORT).show()
                             }
                             is Status.Loading -> {
                                 progressBar2.visibility = View.VISIBLE

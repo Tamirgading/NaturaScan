@@ -71,10 +71,5 @@ class UserRepository(private val apiService: ApiService) {
         const val NULL_RESPONSE = "Error: Response body is null"
         const val NO_RESPONSE = "Error: Response failed"
         const val FAILURE = "Error: Failed"
-
-        @Volatile
-        private var instance: UserRepository? = null
-        fun getInstance(apiService: ApiService) = instance ?: synchronized(this)
-        { instance ?: UserRepository(apiService) }.also { instance = it }
     }
 }

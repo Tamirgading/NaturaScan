@@ -17,9 +17,7 @@ class PasswordEditText : AppCompatEditText {
     }
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
-        context,
-        attrs,
-        defStyleAttr
+        context, attrs, defStyleAttr
     ) {
         init()
     }
@@ -41,9 +39,6 @@ class PasswordEditText : AppCompatEditText {
 
             override fun afterTextChanged(p0: Editable?) {
             }
-
         })
     }
-
-
 }

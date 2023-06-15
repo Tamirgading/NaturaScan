@@ -32,10 +32,7 @@ class MainActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         supportActionBar?.hide()
         setupViewModel()
-        //nanti hapus
-        setupActivity()
-        //UNCOMMMENT NANTI
-        //checkAuth()
+        checkAuth()
     }
 
     override fun onBackPressed() {
@@ -85,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun setupViewModel() {
+    private fun setupViewModel() {
         vmFactory = MainVMFactory(UserPreferences.getInstance(dataStore))
         viewModel = ViewModelProvider(this@MainActivity, vmFactory)[MainViewModel::class.java]
     }

@@ -16,5 +16,7 @@ data class Plant(
     val name: String,
     @ColumnInfo("photoUri")
     val photoUri: String? = null,
+    @ColumnInfo("desc")
+    val desc : String?,
 ) : Parcelable
 

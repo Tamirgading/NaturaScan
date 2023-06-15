@@ -23,6 +23,7 @@
     <string name="edibleText">Bisa dimakan</string>
     <string name="resultEdible">Tumbuhan Ini bisa dimakan</string>
     <string name="emptyDatabase">Tidak ada data tanaman\nyang disimpan</string>
+    <string name="descriptionText">Deskripsi</string>
 
 
 </resources>

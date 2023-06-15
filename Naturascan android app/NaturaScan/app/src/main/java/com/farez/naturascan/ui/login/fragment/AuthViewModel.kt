@@ -28,9 +28,6 @@ class AuthViewModel(
         }
     }
 
-    fun getAuth(): LiveData<Boolean> {
-        return userPreferences.getAuth().asLiveData()
-    }
 }
 
 class AuthVMFactory(

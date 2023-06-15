@@ -1,6 +1,7 @@
 package com.farez.naturascan.ui.main.fragment.saved
 
 import android.app.Application
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,6 +10,7 @@ import com.farez.naturascan.R
 import com.farez.naturascan.data.local.model.Plant
 import com.farez.naturascan.data.repository.PlantRepository
 import com.farez.naturascan.databinding.RvSavedPlantsBinding
+import com.farez.naturascan.ui.detailplant.PlantDetailActivity
 
 class SavedPlantAdapter(private val application: Application) :
     RecyclerView.Adapter<SavedPlantAdapter.SavedPlantViewHolder>() {
@@ -48,6 +50,11 @@ class SavedPlantAdapter(private val application: Application) :
                 PlantRepository(application).deletePlant(plant)
                 listPlantDB.remove(plant)
                 notifyItemRemoved(position)
+            }
+            itemView.setOnClickListener {
+                val intent = Intent(it.context, PlantDetailActivity::class.java)
+                    .putExtra("PLANT", plant)
+                it.context.startActivity(intent)
             }
         }
     }

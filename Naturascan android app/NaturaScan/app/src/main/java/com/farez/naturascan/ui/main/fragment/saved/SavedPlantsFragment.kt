@@ -54,7 +54,6 @@ class SavedPlantsFragment : Fragment() {
     private fun setupViewModel() {
         vmFactory = SavedPlantVMFactory(
             Injection.providePlantRepository(
-                requireContext(),
                 requireActivity().application
             )
         )
